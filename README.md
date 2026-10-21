@@ -1,0 +1,2 @@
+# Synapse
+Synapse is a capstone project exploring how a mobile application can help people document symptoms, follow clinician-directed recovery activities, recognize patterns over time, and communicate a clearer history between appointments. The experience is designed around neurological injury and vestibular/dizziness recovery, where symptoms and day-to-day progress can be difficult to recall or describe.
