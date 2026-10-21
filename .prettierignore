@@ -1,0 +1,8 @@
+.tools
+.expo
+node_modules
+dist
+package-lock.json
+docs/design/figma-inspection.json
+test-results
+playwright-report

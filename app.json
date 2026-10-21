@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "Synapse",
+    "slug": "synapse",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "synapse",
+    "userInterfaceStyle": "automatic",
+    "icon": "./assets/brand/synapse-logo-welcome.png",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "predictiveBackGestureEnabled": true
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/brand/synapse-logo-header.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#f3faf9",
+          "image": "./assets/brand/synapse-logo-welcome.png",
+          "imageWidth": 180,
+          "dark": {
+            "backgroundColor": "#080d24"
+          }
+        }
+      ],
+      "expo-web-browser"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
