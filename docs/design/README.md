@@ -13,6 +13,8 @@ The complete saved page has **319 layers**, indexed with parent relationships, t
 | Sign in `/sign-in`                   | `5:15`    | `5:44`     |
 | Password recovery `/forgot-password` | `5:23`    | `5:52`     |
 | About `/about`                       | `50:118`  | `50:172`   |
+| Reset password `/reset-password`     | `56:118`  | `56:146`   |
+| Password reset complete              | `59:144`  | `59:174`   |
 
 All reference frames are 390 × 844. Content gutters are 28. Fields have 12-point corners, 44-point inputs, a 20-point label line, and an 8-point gap. Buttons are 54 high with 14-point corners. About mission cards use 18-point corners. Headings use Manrope Bold; body text uses Inter Regular, field labels/Google buttons use Inter Medium, and primary buttons use Inter Semi Bold. Font files are bundled through the Expo Google Fonts packages, so runtime does not require Google Fonts network access.
 

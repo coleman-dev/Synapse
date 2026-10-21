@@ -1,0 +1,24 @@
+{
+  "firestore": { "rules": "firestore.rules" },
+  "hosting": {
+    "site": "synapse-59923",
+    "public": "dist",
+    "cleanUrls": true,
+    "ignore": ["firebase.json", "**/.*"],
+    "headers": [
+      { "source": "**", "headers": [
+        { "key": "Referrer-Policy", "value": "no-referrer" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" }
+      ] },
+      { "source": "/{reset-password,email-action}{,/**}", "headers": [
+        { "key": "Cache-Control", "value": "no-store" }
+      ] }
+    ]
+  },
+  "emulators": {
+    "auth": { "port": 9099 },
+    "firestore": { "port": 8080 },
+    "ui": { "enabled": false },
+    "singleProjectMode": true
+  }
+}

@@ -1,6 +1,5 @@
 import { Platform } from 'react-native';
 import {
-  createUserWithEmailAndPassword,
   GoogleAuthProvider,
   inMemoryPersistence,
   sendPasswordResetEmail,
@@ -8,24 +7,21 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  updateProfile,
 } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 import { configuredAuth, persistentSession } from './firebase';
+import { firebaseApp } from './firebase-config';
+import { connectConfiguredFirestoreEmulator } from './emulators';
+import { registerAccount } from './registration';
 import type { SignUpValues } from './validation';
 
 export async function createAccount(values: SignUpValues) {
   const auth = configuredAuth();
-  await setPersistence(auth, inMemoryPersistence);
-  const { user } = await createUserWithEmailAndPassword(auth, values.email.trim(), values.password);
-  // Account creation has already succeeded even if a profile update is interrupted.
-  try {
-    await updateProfile(user, {
-      displayName: `${values.firstName.trim()} ${values.lastName.trim()}`,
-    });
-  } catch {
-    /* A missing display name must not encourage creating the account twice. */
-  }
+  await setPersistence(auth, persistentSession);
+  const db = getFirestore(firebaseApp());
+  connectConfiguredFirestoreEmulator(db);
+  await registerAccount(auth, db, values);
 }
 
 export async function signIn(email: string, password: string, remember: boolean) {

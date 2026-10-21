@@ -1,6 +1,9 @@
 export function authError(error: unknown): string {
   const code = error && typeof error === 'object' && 'code' in error ? String(error.code) : '';
   const messages: Record<string, string> = {
+    'auth/password-reused': 'Your new password must be different from your current password.',
+    'auth/expired-action-code': 'This link has expired. Request a new link to try again.',
+    'auth/invalid-action-code': 'This link is invalid or has already been used. Request a new link.',
     'auth/invalid-credential': 'The email or password is incorrect. Please try again.',
     'auth/user-not-found': 'The email or password is incorrect. Please try again.',
     'auth/wrong-password': 'The email or password is incorrect. Please try again.',

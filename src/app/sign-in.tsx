@@ -20,7 +20,7 @@ import { useTheme } from '@/theme/ThemeProvider';
 
 export default function SignInScreen() {
   const { colors } = useTheme();
-  const { user } = useAuth();
+  const { user, ready } = useAuth();
   const action = useAuthAction();
   const emailRef = useRef<TextInput>(null);
   const passwordRef = useRef<TextInput>(null);
@@ -43,6 +43,7 @@ export default function SignInScreen() {
       setValues({ ...values, password: '' });
     });
   }
+  if (!ready) return <Screen title="Sign in" />;
   if (user)
     return (
       <Screen title="Signed in">

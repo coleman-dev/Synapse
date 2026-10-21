@@ -27,11 +27,13 @@
     "react-native-worklets": "0.10.1"
   },
   "devDependencies": {
+    "@firebase/rules-unit-testing": "^6.0.0",
     "@playwright/test": "^1.64.1",
     "@types/node": "^24.0.0",
     "@types/react": "~19.2.2",
     "eslint": "^9.39.5",
     "eslint-config-expo": "~57.0.2",
+    "firebase-tools": "^15.34.0",
     "tsx": "^4.23.15",
     "typescript": "~6.0.3"
   },
@@ -44,6 +46,8 @@
     "lint": "eslint .",
     "test": "node --import tsx --test tests/*.test.ts",
     "test:e2e": "playwright test",
+    "test:firebase": "node --import tsx --test tests/*.integration.ts",
+    "test:emulators": "firebase emulators:exec --only auth,firestore --project demo-synapse \"npm run test:firebase && playwright test --config playwright.firebase.config.ts\"",
     "export:all": "expo export --platform all"
   },
   "engines": {
