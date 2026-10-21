@@ -6,7 +6,7 @@ Registration creates the Auth account, persists its session, and writes `users/{
 
 Remember me selects persistent or memory-only sign-in. Native sessions use AsyncStorage 2.2 through Firebase's native persistence adapter; browser sessions use local storage. Application code does not separately save passwords. The existing signed-in screen exposes sign-out.
 
-Sign-up validation preserves the Figma policy: 15+ characters, uppercase and lowercase letters, a number, and a special character. Set the same policy in Firebase Authentication settings to enforce it for requests that bypass this UI. Password reset uses Firebase's hosted email handler. Mobile Google OAuth remains outside this integration and still reports that it is unavailable.
+Sign-up validation preserves the Figma policy: 15+ characters, uppercase and lowercase letters, a number, and a special character. Set the same policy in Firebase Authentication settings to enforce it for requests that bypass this UI. The [branded reset screen and shared email-action handler](password-reset.md) support password reset, email verification, and email recovery. Firebase's template action URL must point to the shared handler for email links to use it. Mobile Google OAuth remains outside this integration and still reports that it is unavailable.
 
 ## Firestore rules
 

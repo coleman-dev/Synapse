@@ -72,6 +72,8 @@ function AppNavigation() {
           <Stack.Screen name="sign-up" options={{ title: 'Create account | Synapse' }} />
           <Stack.Screen name="sign-in" options={{ title: 'Sign in | Synapse' }} />
           <Stack.Screen name="forgot-password" options={{ title: 'Password recovery | Synapse' }} />
+          <Stack.Screen name="reset-password" options={{ title: 'Reset password | Synapse' }} />
+          <Stack.Screen name="email-action" options={{ title: 'Account action | Synapse' }} />
           <Stack.Screen name="about" options={{ title: 'About | Synapse' }} />
         </Stack>
       </AuthProvider>

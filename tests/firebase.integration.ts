@@ -4,7 +4,7 @@ import { after, before, beforeEach, test } from 'node:test';
 import { initializeApp, deleteApp } from 'firebase/app';
 import {
   connectAuthEmulator, getAuth, signInWithEmailAndPassword, signOut,
-  sendPasswordResetEmail, confirmPasswordReset,
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 import {
   connectFirestoreEmulator, getFirestore, doc, setDoc, getDoc, updateDoc,
@@ -12,6 +12,7 @@ import {
 } from 'firebase/firestore';
 import { initializeTestEnvironment, assertFails, assertSucceeds, type RulesTestEnvironment } from '@firebase/rules-unit-testing';
 import { registerAccount } from '../src/features/auth/registration';
+import { resetPassword } from '../src/features/auth/password-reset';
 
 const projectId = 'demo-synapse';
 let env: RulesTestEnvironment;
@@ -84,7 +85,7 @@ test('registration creates Auth and Firestore records; login, logout, recovery w
     const user = await registerAccount(auth, db, {
       firstName: ' Toni ', lastName: ' Coleman ', email, password, confirmPassword: password,
     });
-    assert.equal(auth.currentUser?.uid, user.uid);
+    assert.equal(getAuth(app).currentUser?.uid, user.uid);
     assert.equal(user.displayName, 'Toni Coleman');
     const data = (await getDoc(doc(db, 'users', user.uid))).data()!;
     assert.equal(data.firstName, 'Toni');
@@ -101,7 +102,10 @@ test('registration creates Auth and Firestore records; login, logout, recovery w
     const codes = await response.json() as { oobCodes: { email: string; oobCode: string }[] };
     const code = codes.oobCodes.find((item) => item.email === email)!;
     assert.ok(code);
-    await confirmPasswordReset(auth, code.oobCode, 'UpdatedSynapse2026!');
+    await assert.rejects(resetPassword(auth, code.oobCode, password), { code: 'auth/password-reused' });
+    assert.equal(getAuth(app).currentUser?.uid, user.uid);
+    await resetPassword(auth, code.oobCode, 'UpdatedSynapse2026!');
+    assert.equal(auth.currentUser, null);
     await signOut(auth);
     await assert.rejects(signInWithEmailAndPassword(auth, email, password));
     await signInWithEmailAndPassword(auth, email, 'UpdatedSynapse2026!');
