@@ -19,5 +19,5 @@ export const firebaseConfigured = !!(
 export function firebaseApp() {
   if (!firebaseConfigured)
     throw new Error('Authentication is not connected yet. Please try again later.');
-  return getApps().length ? getApp() : initializeApp(config);
+  return getApps().some((app) => app.name === '[DEFAULT]') ? getApp() : initializeApp(config);
 }

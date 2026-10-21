@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid} {
+      function owner() {
+        return request.auth != null && request.auth.uid == uid;
+      }
+      function validProfile() {
+        let data = request.resource.data;
+        return data.keys().hasAll(['firstName', 'lastName', 'email', 'createdAt', 'updatedAt'])
+          && data.keys().hasOnly(['firstName', 'lastName', 'email', 'createdAt', 'updatedAt'])
+          && data.firstName is string && data.firstName.size() > 0 && data.firstName.size() <= 100
+          && data.lastName is string && data.lastName.size() > 0 && data.lastName.size() <= 100
+          && data.email == request.auth.token.email
+          && data.createdAt is timestamp && data.updatedAt == request.time;
+      }
+      allow get: if owner();
+      allow create: if owner() && validProfile() && request.resource.data.createdAt == request.time;
+      allow update: if owner() && validProfile()
+        && request.resource.data.createdAt == resource.data.createdAt;
+      // Collection listing, profile deletion, subcollections, and every other
+      // document path are denied by default.
+    }
+  }
+}
